@@ -32,15 +32,15 @@ public class WorldModel
 		return (this.within_bounds(pt) && this.occupancy.get_cell(pt) 
                        != null);
 	}
-    //this part is hard and not needed for this assisgnment
-    /*public Entity find_nearest(Point pt, Class<?> type)
+
+    public Entity find_nearest(Point pt, Class type)
 	{
-		LinkedList<Entity> oftype;
-		LinkedList<Integer> distances;
+		LinkedList<Entity> oftype = new LinkedList<>();
+		LinkedList<Integer> distances = new LinkedList<>();
 
 		for(int i=0;i < entities.size();i++)
 		{
-		    if (entities.get(i) instanceof type)
+		    if (type.isInstance(entities.get(i)))
 			{
 			    oftype.add(entities.get(i));
                             CoordEntity coord_ent = (CoordEntity) 
@@ -51,7 +51,7 @@ public class WorldModel
 		}
 		int nearest_index = Utility.nearest_entity(distances);
 		return oftype.get(nearest_index);
-		}*/
+		}
 
 	public void add_entity(CoordEntity e)
 	{

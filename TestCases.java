@@ -296,4 +296,61 @@ public class TestCases
         w.add_entity(m);
         assertTrue(comp_pts(m.next_position(w, points[8][5]), points[1][4]));
     }
+
+    @Test
+    public void test1_find_nearest()
+    {
+        WorldModel w = new WorldModel(10,10,back);
+        CoordEntity e1 = new MinerNotFull("miner1", 120, new Point(2,3));
+        CoordEntity e2 = new MinerNotFull("miner2", 120, new Point(1,9));
+        CoordEntity e3 = new Vein("vein1", new Point(1,2));
+
+        w.add_entity(e1);
+        w.add_entity(e2);
+        w.add_entity(e3);
+
+        Point check_point = new Point(1,1);
+
+        Entity miner_check = w.find_nearest(check_point,e1.getClass()); //e1.get_class is a minernotfull
+
+        assertTrue(miner_check == e1); //exact same object
+    }
+
+    @Test
+    public void test2_find_nearest()
+    {
+        WorldModel w = new WorldModel(10,10,back);
+        CoordEntity e1 = new MinerFull("miner1", 120, new Point(8,9));
+        CoordEntity e2 = new MinerFull("miner2", 90, new Point(1,9));
+        CoordEntity e3 = new MinerNotFull("miner3", 130, new Point(9,9));
+
+        w.add_entity(e1);
+        w.add_entity(e2);
+        w.add_entity(e3);
+
+        Point check_point = new Point(9,9);
+
+        Entity miner_check = w.find_nearest(check_point,e1.getClass());
+
+        assertTrue(miner_check == e1); //exact same object
+    }
+
+    @Test
+    public void test3_find_nearest()
+    {
+        WorldModel w = new WorldModel(10,10,back);
+        CoordEntity e2 = new OreBlob("oreblob1", new Point(8,9));
+        CoordEntity e1 = new MinerFull("miner2", 90, new Point(1,9));
+        CoordEntity e3 = new MinerNotFull("miner2", 130, new Point(9,9));
+
+        w.add_entity(e1);
+        w.add_entity(e2);
+        w.add_entity(e3);
+
+        Point check_point = new Point(5,5);
+
+        Entity miner_check = w.find_nearest(check_point,e2.getClass());
+
+        assertTrue(miner_check == e2); //exact same object
+    }
 }
