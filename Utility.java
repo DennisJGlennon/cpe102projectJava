@@ -3,7 +3,12 @@ import java.util.List;
 
 public class Utility
 {
-	
+	public static int clamp(int v, int low, int high)
+	{
+		return Math.min(high,Math.max(v, low));
+	}
+
+
 	public static int distance_sq(Point p1, Point p2)
 	{	
 	        double dist_temp = Math.pow(p1.get_x() - p2.get_x(), 2) + 

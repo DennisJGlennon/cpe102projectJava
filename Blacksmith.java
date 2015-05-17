@@ -2,8 +2,8 @@ public class Blacksmith
     extends CoordEntity
 {
 
-    public Blacksmith(String name, Point position, int resource_limit)
+    public Blacksmith(String name, int current_img, Point position)
     {
-        super(name, position, "blacksmith");
+        super(name, current_img, position);
     }
 }

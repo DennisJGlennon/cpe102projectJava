@@ -1,8 +1,8 @@
 public class Quake
-    extends CoordEntity
+    extends AnimatedActor
 {
-    public Quake(String name, Point position)
+    public Quake(String name, int current_img, Point position, int rate, int animation_rate)
     {
-        super(name, position, "unknown");
+        super(name, current_img, position, rate, animation_rate);
     }
 }

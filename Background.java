@@ -4,8 +4,8 @@
 public class Background
     extends Entity
 {
-    public Background(String name)
+    public Background(String name, int current_img)
     {
-        super(name, "unknown");
-    } 
+        super(name, current_img);
+    }
 }

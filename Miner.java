@@ -1,13 +1,13 @@
 public class Miner
-        extends CoordEntity
+        extends AnimatedActor
 {
     private int resource_limit;
     private int resource_count;
 
-    public Miner(String name, Point position, int resource_limit,
-                 int resource_count, String entity_string)
+    public Miner(String name, int current_img, Point position, int rate,
+                 int animation_rate, int resource_limit, int resource_count)
     {
-        super(name, position, entity_string);
+        super(name, current_img, position, rate, animation_rate);
         this.resource_limit = resource_limit;
         this.resource_count = resource_count;
 

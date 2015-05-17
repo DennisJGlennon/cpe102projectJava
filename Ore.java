@@ -1,8 +1,8 @@
 public class Ore
-    extends CoordEntity
+    extends Actor
 {
-    public Ore(String name, Point position)
+    public Ore(String name, int current_img, Point position, int rate)
     {
-        super(name, position, "ore");
+        super(name, current_img, position, rate);
     }
 }

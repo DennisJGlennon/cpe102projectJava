@@ -1,9 +1,11 @@
 public class Vein
-    extends CoordEntity
+    extends Actor
 {
-    public Vein(String name, Point position)
+	int resource_distance;
+    public Vein(String name, int current_img, Point position, int rate, int resource_distance)
     {
-        super(name, position, "vein");
+        super(name, current_img, position, rate);
+        this.resource_distance = resource_distance;
     }
 
     public Point find_open_around(WorldModel world, int dist)

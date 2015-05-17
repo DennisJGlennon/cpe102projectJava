@@ -3,9 +3,9 @@ public class CoordEntity
 {
     private Point position;
 
-    public CoordEntity(String name, Point position, String entity_string)
+    public CoordEntity(String name, int current_img, Point position)
     {
-        super(name, entity_string);
+        super(name, current_img);
         this.position = position;
 
     }

@@ -2,12 +2,12 @@ public class Entity
         extends Object
 {
     private String name;
-    private String entity_string;
+    private int current_img;
 
-    public Entity(String name, String entity_string)
+    public Entity(String name, int current_img)
     {
         this.name = name;
-        this.entity_string = entity_string;
+        this.current_img = current_img;
     }
 
     public String get_name()
@@ -15,9 +15,6 @@ public class Entity
         return this.name;
     }
 
-    public String entity_string()
-    {
-        return entity_string;
-    }
+
 
 }

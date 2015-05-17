@@ -1,8 +1,8 @@
 public class Obstacle
     extends CoordEntity
 {
-    public Obstacle(String name, Point position)
+    public Obstacle(String name, int current_img, Point position)
     {
-        super(name, position, "obstacle");
+        super(name, current_img, position);
     }
 }
