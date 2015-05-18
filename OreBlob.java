@@ -4,6 +4,7 @@ public class OreBlob
     public OreBlob(String name, int current_img, Point position, int rate, int animation_rate)
     {
         super(name, current_img, position, rate, animation_rate);
+        this.imgs = 12;
     }
 
     public Point blob_next_position(WorldModel world, Point dest_pt)

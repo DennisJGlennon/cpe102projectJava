@@ -10,6 +10,7 @@ public class Miner
         super(name, current_img, position, rate, animation_rate);
         this.resource_limit = resource_limit;
         this.resource_count = resource_count;
+        this.imgs = 5;
 
     }
 
@@ -46,7 +47,4 @@ public class Miner
         }
         return new_pt;
     }
-
-    //try transform miner is next~
-    //public Miner try_transform_miner(WorldModel world, Transformer.transform
 }

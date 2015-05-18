@@ -26,7 +26,7 @@ public class Actor extends CoordEntity
         int temp_size = pending_actions.size();
         for(int i=0; i<temp_size;i++)
         {
-            //world.unschedule_action(pending_actions.get(i));
+            world.unschedule_action(pending_actions.get(i));
             //clear_pending_actions();
             world.remove_entity(this);
         }
@@ -36,4 +36,25 @@ public class Actor extends CoordEntity
     {
         return this.rate;
     }
+
+    public void add_pending_action(Action action)
+	{
+        pending_actions.add(action);
+	}
+
+    public void remove_pending_action(Action action)
+	{
+        pending_actions.remove(action);
+	}
+
+    public List<Action> get_pending_actions()
+	{
+        return pending_actions;
+	}
+
+    public void schedule_action(WorldModel world, Action action, long time)
+	{
+        add_pending_action(action);
+        world.schedule_action(action, time);
+	}
 }

@@ -15,6 +15,16 @@ public class Entity
         return this.name;
     }
 
+    public int get_current_img()
+	{
+        return this.current_img;
+	}
+
+    public void to_img(int img)
+	{
+        this.current_img = img;
+	}
+
 
 
 }

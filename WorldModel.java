@@ -12,6 +12,7 @@ public class WorldModel
 	private int num_cols;
 	private Grid occupancy;
 	private ArrayList<Entity> entities = new ArrayList<Entity>();
+    private LinkedList<Pair> action_queue = new LinkedList<Pair>();
 	
 	public WorldModel(int num_rows, int num_cols, Background default_background)
 	{
@@ -33,8 +34,17 @@ public class WorldModel
                        != null);
 	}
 
-    public Entity find_nearest(Point pt, Class type)
+    public Entity find_nearest(Point pt, String name)
 	{
+        Class type = int.class;
+        try
+		{
+            type = Class.forName(name);
+		}
+        catch (ClassNotFoundException e)
+		{
+            
+		}
 		LinkedList<Entity> oftype = new LinkedList<>();
 		LinkedList<Integer> distances = new LinkedList<>();
 
@@ -133,5 +143,46 @@ public class WorldModel
 	public List<Entity> get_entities()
 	{
 		return this.entities;
+	}
+
+    public void schedule_action(Action action, long time)
+	{
+        action_queue.add(new Pair(action, time));
+	}
+
+    public void unschedule_action(Action action)
+	{
+        for (Pair p : action_queue)
+		{
+            if (p.action() == action)
+			{
+                action_queue.remove(p);
+			}
+		}
+	}
+
+    public List<Point> update_on_time(long ticks)
+	{
+        List<Point> tiles = new LinkedList<Point>();
+
+        Pair next;
+        if (action_queue.size() > 0)
+		{
+            next = action_queue.get(0);
+		
+        while (action_queue.size() > 0 && next.time() < ticks)
+		{
+            action_queue.remove(0);
+            for (Point pt : next.action().act())
+			{
+                tiles.add(pt);
+			}
+            if (action_queue.size() > 0)
+			{
+                next = action_queue.get(0);
+			}
+		}
+		}
+        return tiles;
 	}
 }

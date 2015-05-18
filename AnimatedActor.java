@@ -5,6 +5,7 @@ public class AnimatedActor
 extends Actor
 {
     private int animation_rate;
+    protected int imgs;
 
     public AnimatedActor(String name, int current_img, Point position, int rate,
                          int animation_rate)
