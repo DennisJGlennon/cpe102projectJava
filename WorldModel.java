@@ -13,6 +13,7 @@ public class WorldModel
 	private Grid occupancy;
 	private ArrayList<Entity> entities = new ArrayList<Entity>();
     private LinkedList<Pair> action_queue = new LinkedList<Pair>();
+    private ArrayList<Point> back = new ArrayList<Point>();
 	
 	public WorldModel(int num_rows, int num_cols, Background default_background)
 	{
@@ -21,17 +22,37 @@ public class WorldModel
 		this.num_cols = num_cols;
 		this.occupancy = new Grid(num_cols, num_rows,null);	
 	}
+    
+    public void add_to_back(Point p)
+	{
+        back.add(p);
+	}
+
+    public void add_back()
+	{
+        for (Point p : back)
+		{
+            background.set_cell(p, (Entity) new Background("name", 1));
+		}
+	}
+
 	
 	public boolean within_bounds(Point pt)
 	{
 	    return ((pt.get_x() >= 0 && pt.get_x() < this.num_cols) && 
 		    (pt.get_y() >= 0 && pt.get_y() < this.num_rows));
 	}
+
+    public boolean occ_for_path(Point pt)
+	{
+		return (this.within_bounds(pt)/* && this.occupancy.get_cell(pt) 
+										 != null && (this.occupancy.get_cell(pt) instanceof Background)*/);
+	}
 	
 	public boolean is_occupied(Point pt)
 	{
 		return (this.within_bounds(pt) && this.occupancy.get_cell(pt) 
-                       != null);
+				!= null);
 	}
 
     public Entity find_nearest(Point pt, String name)
@@ -99,7 +120,7 @@ public class WorldModel
 		if(this.within_bounds(pt))
 		{
 
-			this.occupancy.set_cell(old_pt, null);
+			this.occupancy.set_cell(old_pt, this.background.get_cell(old_pt));
 			this.occupancy.set_cell(pt, e);
 			e.set_position(pt);
 			Point [] tiles = {old_pt, pt};
@@ -116,7 +137,7 @@ public class WorldModel
 
 	public void remove_entity_at(Point pt)
 	{
-		if(this.within_bounds(pt) && this.occupancy.get_cell(pt) != null)
+		if(this.within_bounds(pt) && this.occupancy.get_cell(pt) != null && !(this.occupancy.get_cell(pt) instanceof Background))
 		{
 			Point out_of_bounds = new Point(-1,-1);
 			// this is bad, fix this later. not robust, etc

@@ -15,8 +15,8 @@ extends PApplet
     public final int TILE_HEIGHT = 32;
     private int num_rows = SCREEN_HEIGHT/TILE_HEIGHT;
     private int num_cols = SCREEN_WIDTH/TILE_WIDTH;
-    private final int NUM_ROWS_WORLD = 100;
-    private final int NUM_COLS_WORLD = 100;
+    private final int NUM_ROWS_WORLD = 31;
+    private final int NUM_COLS_WORLD = 41;
     private final int BGND_COLOR = color(220, 230, 245);
     private final int MIN_DELAY = 150;
     private final int MINER_ANIMATION_RATE = 300;
@@ -52,13 +52,11 @@ extends PApplet
         view.draw_entities();
         world.update_on_time(System.currentTimeMillis());
         //p(world);
-        System.out.println("" + world.get_entities().size());
+        //System.out.println("" + world.get_entities().size());
         /*if (t + MIN_DELAY < System.currentTimeMillis())
 		{
             if (view.update_on_time(t, world))
 			{
-                CoordEntity c = (CoordEntity) world.get_entities().get(6);
-                //System.out.println("" + c.get_position().get_x());
                 t = System.currentTimeMillis();
 			}
 			}*/
@@ -84,6 +82,7 @@ extends PApplet
         Action act;
         Reader r = new Reader(this.world);
         int type;
+        AnimatedActor ani;
         for (Entity e : this.world.get_entities())
 		{
             if (e instanceof Actor)
@@ -104,13 +103,20 @@ extends PApplet
                 a = (Actor) e;
                 act = new Action(this.world, a, t, type);
                 a.schedule_action(this.world, act, t + a.get_rate());
+                if (e instanceof AnimatedActor)
+				{
+                    ani = (AnimatedActor) e;
+                    act = new Action(this.world, a, t, 3);
+                    ani.schedule_animation(world);
+				}
 			}
 		}
+        this.world.add_back();
     }
 
     public void keyPressed()
     {
-        switch(key)
+		/* switch(key)
         {
             case 'w':
                 view.create_shifted_viewport(0,-1);
@@ -124,8 +130,8 @@ extends PApplet
             case 'd':
                 view.create_shifted_viewport(1,0);
                 break;
-        }
-        /*
+        }*/
+        
         if(key == CODED)
         switch(keyCode)
         {
@@ -136,12 +142,12 @@ extends PApplet
                 view.create_shifted_viewport(0,1);
                 break;
             case LEFT:
-                view.create_shifted_viewport(1,0);
-                break;
-            case RIGHT:
                 view.create_shifted_viewport(-1,0);
                 break;
-        }*/
+            case RIGHT:
+                view.create_shifted_viewport(1,0);
+                break;
+        }
     }
 
     public static void main(String[] args)

@@ -19,6 +19,10 @@ public class MinerFull
         else
 		{
             Point new_pt = this.next_position(world, smith_pt);
+            if (new_pt.get_x() == entity_pt.get_x() && new_pt.get_y() == entity_pt.get_y())
+				{
+					System.out.println("wadafa");
+				}
             return world.move_entity(this, new_pt);
 		}
 	}

@@ -16,11 +16,6 @@ public class Actor extends CoordEntity
         this.rate = rate;
     }
 
-    public void schedule_action(WorldModel world, int time)
-    {
-
-    }
-
     public void remove_entity(WorldModel world)
     {
         int temp_size = pending_actions.size();

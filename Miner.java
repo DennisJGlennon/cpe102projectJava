@@ -32,16 +32,23 @@ public class Miner
     public Point next_position(WorldModel world, Point dest_pt)
     {
         Point entity_pt = this.get_position();
+        if (entity_pt.get_x() == dest_pt.get_x() && entity_pt.get_y() ==
+            dest_pt.get_y())
+		{
+            System.out.println("Reached position");
+		}
         int horiz = Utility.sign(dest_pt.get_x() - entity_pt.get_x());
         Point new_pt = new Point(entity_pt.get_x() + horiz, entity_pt.get_y());
 
-        if (horiz == 0 || world.is_occupied(new_pt))
+        if (horiz == 0 /*|| world.occ_for_path(new_pt)*/)
         {
+ 
             int vert = Utility.sign(dest_pt.get_y() - entity_pt.get_y());
             new_pt = new Point(entity_pt.get_x(), entity_pt.get_y() + vert);
 
-            if (vert == 0 || world.is_occupied(new_pt))
+            if (vert == 0/* || world.occ_for_path(new_pt)*/)
             {
+  
                 new_pt = new Point(entity_pt.get_x(), entity_pt.get_y());
             }
         }

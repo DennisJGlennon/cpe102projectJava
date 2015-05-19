@@ -25,12 +25,12 @@ public class Reader
 				{
 			        if (words[1].equals("grass"))
 					{
-                        //world.add_entity_at(new Background(words[0], 0),                                                                 newpt(words));
+                        //world.add_to_back(new Background(words[0], 0), 
+						//	  newpt(words));
 					}
                     else 
 				    {
-                        world.add_entity_at(new Background(words[0], 1), 
-													   newpt(words));
+                        world.add_to_back(newpt(words));
 					}
 				}
                 if (words[0].equals("miner"))

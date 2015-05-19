@@ -29,8 +29,9 @@ extends Actor
         //this.next_image;
     }
 
-    public void schedule_animation(WorldModel world, int repeat_count)
+    public void schedule_animation(WorldModel world)
     {
-        //schedule_action(world,create_animation_action(world,repeat_count),animation_rate);
+		Action act = new Action(world, (Actor) this, System.currentTimeMillis(), 3);
+        this.schedule_action(world,act,this.animation_rate);
     }
 }

@@ -59,7 +59,8 @@ public class WorldView
             for(int y=ref_pt.get_y();y < (num_rows+ref_pt.get_y());y++)
             {
                 Point curr_pt = new Point(x, y);
-                screen.image(background_image.get(0), (x-ref_pt.get_x()) * 32, (y-ref_pt.get_y()) * 32);
+                Background b = this.world.get_background(curr_pt);
+                screen.image(background_image.get(b.get_current_img()), (x-ref_pt.get_x()) * 32, (y-ref_pt.get_y()) * 32);
             }
         }
     }
@@ -70,8 +71,12 @@ public class WorldView
         {
             for(int y=ref_pt.get_y();y < (num_rows+ref_pt.get_y());y++)
             {
+                Background b = this.world.get_background(new Point(x, y));
+
                 Point curr_world_pt = new Point(x, y);
                 Point curr_view_pt = world_to_viewport(curr_world_pt);
+                screen.image(background_image.get(b.get_current_img()),
+                        curr_view_pt.get_x() * 32, curr_view_pt.get_y() * 32);
                 if (world.is_occupied(curr_world_pt))
                 {
                     Entity e = world.get_tile_occupant(curr_world_pt);
@@ -103,20 +108,16 @@ public class WorldView
                         screen.image(quake_images.get(e.get_current_img()),
                                 curr_view_pt.get_x() * 32, curr_view_pt.get_y() * 32);
                     } 
-                    else {
+					/*else {
                         screen.image(background_image.get(e.get_current_img()),
-                                curr_view_pt.get_x() * 32, curr_view_pt.get_y() * 32);
-                    } 
+						curr_view_pt.get_x() * 32, curr_view_pt.get_y() * 32);
+						} */
 				}
 			}
 		}
 	}
                
             
-        
-
-    
-
     public boolean update_on_time(long start, WorldModel world)
 	{
         boolean updated = false;
