@@ -40,6 +40,7 @@ extends PApplet
         init_test_world();
         view = new WorldView(num_cols, num_rows, this, world, TILE_WIDTH, TILE_HEIGHT);
 
+
         view.setup_view();
         t = System.currentTimeMillis();
     }
@@ -49,53 +50,62 @@ extends PApplet
         
         view.draw_background();
         view.draw_entities();
-        world.update_on_time(t);
-        if (t + MIN_DELAY < System.currentTimeMillis())
+        world.update_on_time(System.currentTimeMillis());
+        //p(world);
+        System.out.println("" + world.get_entities().size());
+        /*if (t + MIN_DELAY < System.currentTimeMillis())
 		{
             if (view.update_on_time(t, world))
 			{
                 CoordEntity c = (CoordEntity) world.get_entities().get(6);
-                System.out.println("" + c.get_position().get_x());
+                //System.out.println("" + c.get_position().get_x());
                 t = System.currentTimeMillis();
 			}
-		}
+			}*/
     }
+
+    public void p(WorldModel world)
+	{
+        for (Entity e : world.get_entities())
+		{
+            CoordEntity c = (CoordEntity) e;
+            if (c instanceof Miner)
+			{
+                System.out.println("" + c.get_position().get_x() + " " + c.get_position().get_y());
+                break;
+			}
+		}
+	}
 
     public void init_test_world()
     {
-
-        Point[][] points = new Point[10][10];
-        for (int i = 0; i < 10; i++)
-        {
-            for (int o = 0; o < 10; o++)
-            {
-                points[i][o] = new Point(i + 1, o + 1);
-            }
-        }
-
-        Background back = new Background("back",0);
-        Blacksmith smith = new Blacksmith("smith", 0, points[1][3]);
-        Ore ore = new Ore("ore", 0, points[8][0], 20);
-        Quake quake = new Quake("quake", 0, points[3][1], 20, QUAKE_ANIMATION_RATE);
-        Obstacle obs = new Obstacle("obs", 0, points[4][7]);
-        Vein vein = new Vein("vein", 0, points[4][7], 20, 0);
-        OreBlob blob = new OreBlob("blob", 0, points[1][2], 20, BLOB_ANIMATION_RATE);
-        Miner miner = new Miner("miner", 0, points[5][1], 10, MINER_ANIMATION_RATE, 10, 3);
-        MinerNotFull notfull = new MinerNotFull("notfull", 0, points[4][4], 10, MINER_ANIMATION_RATE, 20);
-        MinerFull full = new MinerFull("full", 0, points[6][6], 10, MINER_ANIMATION_RATE, 20);
-
-        world = new WorldModel(1000,1000,back);
-
-        this.world.add_entity(smith);
-        this.world.add_entity(ore);
-        this.world.add_entity(obs);
-        this.world.add_entity(quake);
-        this.world.add_entity(vein);
-        this.world.add_entity(blob);
-        this.world.add_entity(notfull);
-        this.world.add_entity(miner);
-        this.world.add_entity(full);
-
+        long t = System.currentTimeMillis();
+        Actor a;
+        Action act;
+        Reader r = new Reader(this.world);
+        int type;
+        for (Entity e : this.world.get_entities())
+		{
+            if (e instanceof Actor)
+			{
+                type = 0;
+                if (e instanceof MinerFull)
+				{
+                    type = 1;
+				}
+                if (e instanceof Vein)
+				{
+                    type = 2;
+                }
+                if (e instanceof Ore)
+				{
+                    type = 4;
+				}
+                a = (Actor) e;
+                act = new Action(this.world, a, t, type);
+                a.schedule_action(this.world, act, t + a.get_rate());
+			}
+		}
     }
 
     public void keyPressed()

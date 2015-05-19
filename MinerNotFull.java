@@ -37,6 +37,7 @@ public class MinerNotFull
 		}
         else
 		{
+            System.out.println("madenew");
             Miner miner = new MinerFull(this.get_name(), 
                                   this.get_current_img(),
                                   this.get_position(), this.get_rate(),

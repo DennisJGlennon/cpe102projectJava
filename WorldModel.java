@@ -78,6 +78,20 @@ public class WorldModel
 		}
 	}
 
+	public void add_entity_at(Entity e, Point pt)
+	{
+		Entity old_entity;
+		if (this.within_bounds(pt))
+		{
+			old_entity = this.occupancy.get_cell(pt);
+			//if(old_entity != null) {
+				//old_entity.clear_pending_actions()
+			//}
+			this.occupancy.set_cell(pt,e);
+			this.entities.add(e);
+		}
+	}
+
 	// Return type is not used in this assignment
 	public Point [] move_entity(CoordEntity e, Point pt)
 	{
@@ -164,23 +178,23 @@ public class WorldModel
     public List<Point> update_on_time(long ticks)
 	{
         List<Point> tiles = new LinkedList<Point>();
+        Point[] hm;
 
         Pair next;
         if (action_queue.size() > 0)
 		{
             next = action_queue.get(0);
-		
-        while (action_queue.size() > 0 && next.time() < ticks)
+			if (next.time() < ticks)
+			//while (action_queue.size() > 0 && next.time() < ticks)
 		{
-            action_queue.remove(0);
-            for (Point pt : next.action().act())
-			{
-                tiles.add(pt);
-			}
+
+            hm =next.action().act();
+
             if (action_queue.size() > 0)
 			{
                 next = action_queue.get(0);
 			}
+            action_queue.remove(0);
 		}
 		}
         return tiles;

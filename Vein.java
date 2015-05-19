@@ -8,8 +8,9 @@ public class Vein
         this.resource_distance = resource_distance;
     }
 
-    public Point find_open_around(WorldModel world, int dist)
+    public Point find_open_around(WorldModel world)
     {
+        int dist = this.resource_distance;
         Point pt = this.get_position();
         for (int dy = -dist; dy < dist + 1; dy++)
 	{

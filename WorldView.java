@@ -26,6 +26,7 @@ public class WorldView
     private List<PImage> ore_image = new ArrayList<>();
     private List<PImage> quake_images = new ArrayList<>();
     private List<PImage> blacksmith_image = new ArrayList<>();
+    private List<PImage> obstacle_image = new ArrayList<>();
 
 
     //initial background for testing purposes
@@ -86,6 +87,10 @@ public class WorldView
                         screen.image(blacksmith_image.get(0),
                                 curr_view_pt.get_x() * 32, curr_view_pt.get_y() * 32);
                     }
+                    else if(e instanceof Obstacle){
+                        screen.image(obstacle_image.get(0),
+                                curr_view_pt.get_x() * 32, curr_view_pt.get_y() * 32);
+                    }
                     else if(e instanceof OreBlob) {
                         screen.image(oreblob_images.get(e.get_current_img()),
                                 curr_view_pt.get_x() * 32, curr_view_pt.get_y() * 32);
@@ -97,14 +102,20 @@ public class WorldView
                     else if(e instanceof Quake) {
                         screen.image(quake_images.get(e.get_current_img()),
                                 curr_view_pt.get_x() * 32, curr_view_pt.get_y() * 32);
-                    } else
-                        screen.image(background_image.get(0),
+                    } 
+                    else {
+                        screen.image(background_image.get(e.get_current_img()),
                                 curr_view_pt.get_x() * 32, curr_view_pt.get_y() * 32);
-                }
-            }
-        }
+                    } 
+				}
+			}
+		}
+	}
+               
+            
+        
 
-    }
+    
 
     public boolean update_on_time(long start, WorldModel world)
 	{
@@ -189,9 +200,11 @@ public class WorldView
 
 
     public void image_init() {
-
+       
+        obstacle_image.add(loadImage("obstacle.bmp"));
 
         background_image.add(loadImage("grass.bmp"));
+        background_image.add(loadImage("rock.bmp"));
 
         miner_images.add(setAlpha(loadImage("miner1.bmp"), 
             color(252, 252, 252), 0));
